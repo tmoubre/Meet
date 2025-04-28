@@ -92,23 +92,6 @@ Meet is a progressive web application (PWA) that provides users with a list of e
 - [Progressive Web App (PWA)](https://web.dev/progressive-web-apps/)
 
 
-flowchart TD
-    A[User] --> B[Frontend App (React)]
-    B --> C[HTTPS Request]
-    C --> D[Serverless Functions]
-    D --> E[User Authentication]
-    D --> F[Fetch Event Data]
-    D --> G[Send Confirmation Email]
-    E --> H[Hosted Database]
-    F --> H[Hosted Database]
-    G --> I[Hosted File Storage]
-
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style B fill:#bbf,stroke:#333,stroke-width:2px
-    style D fill:#bfb,stroke:#333,stroke-width:2px
-    style H fill:#ff9,stroke:#333,stroke-width:2px
-    style I fill:#ff9,stroke:#333,stroke-width:2px
-
 ## Serverless Architecture Diagram
 
 ![Meet App Serverless Architecture] ![Workflow](Images/Workflow.png)

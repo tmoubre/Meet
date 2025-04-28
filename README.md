@@ -91,6 +91,33 @@ Meet is a progressive web application (PWA) that provides users with a list of e
 - [Workbox](https://developer.chrome.com/docs/workbox/) (for offline functionality)
 - [Progressive Web App (PWA)](https://web.dev/progressive-web-apps/)
 
+
+flowchart TD
+    A[User] --> B[Frontend App (React)]
+    B --> C[HTTPS Request]
+    C --> D[Serverless Functions]
+    D --> E[User Authentication]
+    D --> F[Fetch Event Data]
+    D --> G[Send Confirmation Email]
+    E --> H[Hosted Database]
+    F --> H[Hosted Database]
+    G --> I[Hosted File Storage]
+
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style B fill:#bbf,stroke:#333,stroke-width:2px
+    style D fill:#bfb,stroke:#333,stroke-width:2px
+    style H fill:#ff9,stroke:#333,stroke-width:2px
+    style I fill:#ff9,stroke:#333,stroke-width:2px
+
+## Serverless Architecture Diagram
+
+![Meet App Serverless Architecture] ![Workflow](Images/Workflow.png)
+
+The Meet App follows a serverless architecture. The React frontend communicates with serverless functions via HTTPS. These functions handle user authentication, event data fetching, and sending email confirmations. Serverless functions interact with a hosted database and hosted file storage. This design ensures scalability, cost-efficiency, and minimal server maintenance.
+
+
+
+
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).

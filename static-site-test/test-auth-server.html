@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OAuth2 Test</title>
+    <style>
+      #container {
+        max-width: 500px;
+        margin: auto;
+        padding: 20px;
+        font-family: sans-serif;
+      }
+      h4 {
+        margin-top: 25px;
+      }
+      input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+      }
+      button {
+        margin-top: 10px;
+        padding: 10px;
+      }
+      pre {
+        background: #f4f4f4;
+        padding: 10px;
+        overflow-x: auto;
+      }
+      #loadingIndicator {
+        display: none;
+        color: blue;
+        font-weight: bold;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main id="container">
+      <h1>OAuth2 Test</h1>
+
+      <h4><b>Step 1:</b> Get the OAuth URL</h4>
+      <p>Click the button below to get your OAuth URL.</p>
+      <button id="getAuthUrlButton">Get OAuth URL</button>
+      <p id="result"></p>
+      <a id="authURL" href="#" target="_blank">Click to authorize</a>
+
+      <h4><b>Step 2:</b> Exchange Code for Access Token</h4>
+      <p>After you're redirected back, copy the code from the URI.</p>
+      <label for="code">Code input</label>
+      <input id="code" type="text" value="" />
+      <button id="getToken">Get Token</button>
+      <pre id="accessToken"></pre>
+
+      <h4><b>Step 3:</b> Get Calendar Events</h4>
+      <p>Click to fetch upcoming events using your access token.</p>
+      <button id="getEvents">Get Calendar Events</button>
+      <pre id="calendarEvents"></pre>
+
+      <div id="loadingIndicator">Loading...</div>
+    </main>
+
+    <script type="text/javascript">
+      // API Base URLs
+      const BASE_URL = "https://oo8j9y6bg6.execute-api.us-east-2.amazonaws.com/dev/api";
+      const getAuthURL = `${BASE_URL}/get-auth-url`;
+      const getTokenURL = `${BASE_URL}/exchange-code`;
+      const getCalendarEventsURL = `${BASE_URL}/calendar-events`;
+
+      // Elements
+      const getAuthUrlButton = document.getElementById("getAuthUrlButton");
+      const resultElement = document.getElementById("result");
+      const resultLink = document.getElementById("authURL");
+
+      const codeValue = document.getElementById("code");
+      const getAccessToken = document.getElementById("getToken");
+      const accessTokenElement = document.getElementById("accessToken");
+
+      const getCalendarEventsButton = document.getElementById("getEvents");
+      const calendarEventsElement = document.getElementById("calendarEvents");
+
+      const loadingIndicator = document.getElementById("loadingIndicator");
+
+      // Step 1: Get Auth URL
+      getAuthUrlButton.onclick = function () {
+        loadingIndicator.style.display = "block"; // show loading indicator
+        fetch(getAuthURL)
+          .then((response) => response.json())
+          .then((json) => {
+            loadingIndicator.style.display = "none"; // hide loading indicator
+            const { authUrl } = json;
+            resultElement.innerText = authUrl;
+            resultLink.href = authUrl;
+          })
+          .catch((err) => {
+            loadingIndicator.style.display = "none"; // hide loading indicator
+            resultElement.innerText = "Error getting auth URL: " + (err.message || "Unknown error");
+          });
+      };
+
+      // Step 2: Get Access Token (POST body option ✅)
+      getAccessToken.onclick = function () {
+        let code = codeValue.value.trim();
+        if (!code) {
+          accessTokenElement.innerText = "Please enter a code.";
+          return;
+        }
+
+        loadingIndicator.style.display = "block"; // show loading indicator
+        fetch(getTokenURL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ code })
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((json) => {
+            loadingIndicator.style.display = "none"; // hide loading indicator
+            if (json.access_token) {
+              accessTokenElement.innerText = `Access token successfully received!`;
+            } else {
+              accessTokenElement.innerText = "Error: No access token found.";
+            }
+          })
+          .catch((err) => {
+            loadingIndicator.style.display = "none"; // hide loading indicator
+            accessTokenElement.innerText = "Error fetching token: " + (err.message || "Unknown error");
+          });
+      };
+
+      // Step 3: Get Calendar Events
+      getCalendarEventsButton.onclick = function () {
+        let tokenText = accessTokenElement.innerText;
+        let accessToken;
+
+        try {
+          const parsed = JSON.parse(tokenText);
+          accessToken = parsed.access_token;
+        } catch (e) {
+          calendarEventsElement.innerText = "Invalid token format or missing access token.";
+          return;
+        }
+
+        loadingIndicator.style.display = "block"; // show loading indicator
+        fetch(getCalendarEventsURL + "/" + accessToken)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((json) => {
+            loadingIndicator.style.display = "none"; // hide loading indicator
+            if (json.events && json.events.length > 0) {
+              const formattedEvents = json.events.map(event => 
+                `<li><b>${event.summary}</b><br/>${new Date(event.start.dateTime).toLocaleString()}</li>`
+              ).join('');
+              calendarEventsElement.innerHTML = `<ul>${formattedEvents}</ul>`;
+            } else {
+              calendarEventsElement.innerText = "No upcoming events found.";
+            }
+          })
+          .catch((err) => {
+            loadingIndicator.style.display = "none"; // hide loading indicator
+            calendarEventsElement.innerText = "Error fetching calendar events: " + (err.message || "Unknown error");
+          });
+      };
+    </script>
+  </body>
+</html>

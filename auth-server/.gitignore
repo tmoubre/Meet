@@ -1,1 +1,10 @@
-serverless-user_accessKeys.csv
+# package directories
+node_modules
+jspm_packages
+
+
+# Serverless directories
+.serverless
+
+
+config.json

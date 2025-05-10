@@ -35,13 +35,14 @@ functions:
           method: post
           cors: true
 
-  getCalendarEvents:
+  getCalendarEvents:  # ← This must be inside the functions block
     handler: handler.getCalendarEvents
     events:
       - http:
-          path: api/get-events/{access_token}
-          method: get
+          path: api/get-events
+          method: post
           cors: true
+
 
 
 

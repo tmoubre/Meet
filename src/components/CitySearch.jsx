@@ -1,33 +1,36 @@
-// src/components/CitySearch.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const CitySearch = ({ allLocations }) => {
-  const [showSuggestions, setShowSuggestions] = useState(false);
+const CitySearch = ({
+  allLocations = [],
+  setCurrentCity = () => {}
+}) => {
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
-  const handleInputChanged = (event) => {
-    const value = event.target.value;
-    setQuery(value);
+  useEffect(() => {
+    setSuggestions(allLocations);
+  }, [allLocations]);
 
-    const filteredLocations = allLocations
-      ? allLocations.filter((location) =>
-          location.toUpperCase().includes(value.toUpperCase())
-        )
-      : [];
-
-    setSuggestions(filteredLocations);
+  const handleInputChanged = (e) => {
+    const val = e.target.value;
+    setQuery(val);
+    const filtered = allLocations.filter((loc) =>
+      loc.toUpperCase().includes(val.toUpperCase())
+    );
+    setSuggestions(filtered);
   };
 
-  const handleItemClicked = (value) => {
-    setQuery(value);
+  const handleItemClicked = (loc) => {
+    setQuery(loc);
     setShowSuggestions(false);
+    setCurrentCity(loc);
   };
 
   return (
     <div id="city-search">
       <input
-        type="text"
+        role="textbox"
         className="city"
         placeholder="Search for a city"
         value={query}
@@ -35,13 +38,16 @@ const CitySearch = ({ allLocations }) => {
         onChange={handleInputChanged}
       />
       {showSuggestions && (
-        <ul className="suggestions">
-          {suggestions.map((suggestion) => (
-            <li key={suggestion} onClick={() => handleItemClicked(suggestion)}>
-              {suggestion}
+        <ul className="suggestions" role="list">
+          {suggestions.map((loc) => (
+            <li key={loc} onClick={() => handleItemClicked(loc)}>
+              {loc}
             </li>
           ))}
-          <li key="See all cities" onClick={() => handleItemClicked('')}>
+          <li
+            key="see-all"
+            onClick={() => handleItemClicked('See all cities')}
+          >
             <b>See all cities</b>
           </li>
         </ul>
@@ -51,3 +57,11 @@ const CitySearch = ({ allLocations }) => {
 };
 
 export default CitySearch;
+
+
+
+
+
+
+
+

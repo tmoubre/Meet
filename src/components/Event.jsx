@@ -1,25 +1,22 @@
-// src/components/Event.jsx
 import React, { useState } from 'react';
 
 const Event = ({ event }) => {
   const [showDetails, setShowDetails] = useState(false);
 
-  const dateTime = event?.created
-  ? new Date(event.created).toLocaleString()
-  : 'No date available';
-  
+  const handleToggle = () => {
+    setShowDetails(prev => !prev);
+  };
+
   return (
     <li className="event">
       <h2>{event.summary}</h2>
       <p>{event.location}</p>
-      <p>{dateTime}</p>
-
-      <button onClick={() => setShowDetails(!showDetails)}>
+      <p>{new Date(event.start.dateTime).toLocaleString()}</p>
+      <button onClick={handleToggle}>
         {showDetails ? 'Hide Details' : 'Show Details'}
       </button>
-
       {showDetails && (
-        <div className="event-details">
+        <div className="details">
           <p>{event.description}</p>
         </div>
       )}
@@ -28,4 +25,5 @@ const Event = ({ event }) => {
 };
 
 export default Event;
+
 

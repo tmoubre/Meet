@@ -1,11 +1,12 @@
-'use strict';
+"use strict";
 
 const { google } = require("googleapis");
 const SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
 const { CLIENT_ID, CLIENT_SECRET, CALENDAR_ID, REDIRECT_URI } = process.env;
 
 // Default fallback if REDIRECT_URI is not in env
-const redirect_uri = REDIRECT_URI || "https://meet-rouge.vercel.app/oauth2callback";
+const redirect_uri =
+  REDIRECT_URI || "https://meet-rouge.vercel.app/oauth2callback";
 
 // Create OAuth2 client per invocation
 const createOAuthClient = () =>
@@ -38,7 +39,7 @@ module.exports.getAuthURL = async () => {
 // POST /api/exchange-code
 module.exports.exchangeCode = async (event) => {
   if (event.httpMethod === "OPTIONS") {
-    return { statusCode: 200, headers: corsHeaders, body: '' };
+    return { statusCode: 200, headers: corsHeaders, body: "" };
   }
 
   const oAuth2Client = createOAuthClient();
@@ -95,7 +96,8 @@ module.exports.getAccessToken = async (event) => {
 module.exports.getCalendarEvents = async (event) => {
   try {
     const { access_token } = JSON.parse(event.body);
-    if (!access_token) throw new Error("Access token missing from request body.");
+    if (!access_token)
+      throw new Error("Access token missing from request body.");
 
     const oAuth2Client = new google.auth.OAuth2();
     oAuth2Client.setCredentials({ access_token });
@@ -126,9 +128,3 @@ module.exports.getCalendarEvents = async (event) => {
     };
   }
 };
-
-
-
-
-
-

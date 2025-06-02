@@ -61,7 +61,8 @@ const getToken = async (code) => {
     const encodedCode = encodeURIComponent(code);
     // Change this URL to exactly your deployed "getAccessToken" Lambda API endpoint:
     // In serverless.yml, that function is exposed at .../api/token/{code} (POST).
-    const TOKEN_URL = "https://meet-rouge.vercel.app/oauth2callback";
+    const TOKEN_URL =
+      "https://oo8j9y6bg6.execute-api.us-east-2.amazonaws.com/dev/api/token";
 
     const response = await fetch(`${TOKEN_URL}/${encodedCode}`, {
       method: "POST",
@@ -110,7 +111,8 @@ export const getAccessToken = async () => {
       // Your Lambda function “getAuthURL” is exposed as GET https://<LAMBDA_DOMAIN>/api/get-auth-url
       // That endpoint will return { authUrl: "https://accounts.google.com/o/oauth2/..." }
       try {
-        const AUTH_URL_LAMBDA = "https://meet-rouge.vercel.app/oauth2callback";
+        const AUTH_URL_LAMBDA =
+          "https://oo8j9y6bg6.execute-api.us-east-2.amazonaws.com/dev/api/get-auth-url";
         const response = await fetch(AUTH_URL_LAMBDA);
         if (!response.ok) {
           throw new Error(`HTTP error getting auth URL: ${response.status}`);
@@ -158,7 +160,8 @@ export const getEvents = async () => {
   //    then call your Lambda “get-events” endpoint to grab real events from Google Calendar
   try {
     // In serverless.yml, getCalendarEvents is exposed at POST /api/get-events
-    const GET_EVENTS_LAMBDA = "https://meet-rouge.vercel.app/oauth2callback";
+    const GET_EVENTS_LAMBDA =
+      "https://oo8j9y6bg6.execute-api.us-east-2.amazonaws.com/dev/api/get-events";
 
     // POST { access_token: "ya29..." }
     const response = await fetch(GET_EVENTS_LAMBDA, {

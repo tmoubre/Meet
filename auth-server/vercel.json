@@ -1,0 +1,9 @@
+{
+    "rewrites": [
+      {
+        "source": "/oauth2callback",
+        "destination": "/"
+      }
+    ]
+  }
+  

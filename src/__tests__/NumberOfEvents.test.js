@@ -24,6 +24,20 @@ describe("<NumberOfEvents />", () => {
     expect(input).toHaveValue(42);
   });
 
+  test("updates the input value when the currentNOE prop changes", () => {
+    const { rerender } = render(
+      <NumberOfEvents currentNOE={32} setCurrentNOE={jest.fn()} />
+    );
+
+    const input = screen.getByRole("spinbutton", {
+      name: /number of events:/i,
+    });
+    expect(input).toHaveValue(32);
+
+    rerender(<NumberOfEvents currentNOE={15} setCurrentNOE={jest.fn()} />);
+    expect(screen.getByRole("spinbutton", { name: /number of events:/i })).toHaveValue(15);
+  });
+
   test("calls setCurrentNOE with the final value when user types", async () => {
     const user = userEvent.setup();
     const { input, mockSet } = setup(32);

@@ -7,7 +7,6 @@
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit-blue?style=for-the-badge&logo=vercel)](https://meet-rouge.vercel.app/)
 
-
 **Meet** is a social app where users can view events happening all around them and where they can look at event details and determine which events they want to attend.
 
 ## Table of Contents
@@ -27,22 +26,22 @@ Meet is a progressive web application (PWA) that provides users with a list of e
 ## User Stories
 
 - **Filter Events by Cities**  
-  *As a user, I should be able to filter events by city, so that I can quickly find events happening in my preferred location.*
+  _As a user, I should be able to filter events by city, so that I can quickly find events happening in my preferred location._
 
 - **Show/Hide Event Details**  
-  *As a user, I should be able to show or hide event details, so that I can view more information only when needed and keep the interface clean and organized.*
+  _As a user, I should be able to show or hide event details, so that I can view more information only when needed and keep the interface clean and organized._
 
 - **Specify Number of Events**  
-  *As a user, I should be able to specify the number of events displayed, so that I can control the amount of information shown based on my preference.*
+  _As a user, I should be able to specify the number of events displayed, so that I can control the amount of information shown based on my preference._
 
 - **Use the App Offline**  
-  *As a user, I should be able to use the app while offline, so that I can access event information even without an internet connection.*
+  _As a user, I should be able to use the app while offline, so that I can access event information even without an internet connection._
 
 - **Add an App Shortcut to the Home Screen**  
-  *As a user, I should be able to add the app as a shortcut to my home screen, so that I can quickly access it like a native mobile app.*
+  _As a user, I should be able to add the app as a shortcut to my home screen, so that I can quickly access it like a native mobile app._
 
 - **Display Charts Visualizing Event Details**  
-  *As a user, I should be able to view charts that visualize event data, so that I can better understand event trends and statistics at a glance.*
+  _As a user, I should be able to view charts that visualize event data, so that I can better understand event trends and statistics at a glance._
 
 ## Features
 
@@ -91,15 +90,11 @@ Meet is a progressive web application (PWA) that provides users with a list of e
 - [Workbox](https://developer.chrome.com/docs/workbox/) (for offline functionality)
 - [Progressive Web App (PWA)](https://web.dev/progressive-web-apps/)
 
-
 ## Serverless Architecture Diagram
 
 ![Meet App Serverless Architecture](Images/Workflow.png)
 
 The Meet App follows a serverless architecture. The React frontend communicates with serverless functions via HTTPS. These functions handle user authentication, event data fetching, and sending email confirmations. Serverless functions interact with a hosted database and hosted file storage. This design ensures scalability, cost-efficiency, and minimal server maintenance.
-
-
-
 
 ## License
 
@@ -113,3 +108,4 @@ Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+  Testing

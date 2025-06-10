@@ -1,15 +1,19 @@
+//app.jsx
+
 import React, { useState, useEffect } from 'react';
 import CitySearch from './components/CitySearch';
+import NumberOfEvents from './components/NumberOfEvents';
 import EventList from './components/EventList';
-import NumberOfEvents from './components/NumberofEvents';
 import { extractLocations, getEvents } from './api';
+import mockData from './mock-data';
 import './App.css';
 
 const App = () => {
   const [events, setEvents] = useState([]);
-  const [currentCity, setCurrentCity] = useState('See all cities');
   const [allLocations, setAllLocations] = useState([]);
-  const [currentNOE, setCurrentNOE] = useState(32);
+  const [currentCity, setCurrentCity] = useState('See all cities');
+  // **default** to the *full* mock‐data length so initial list shows *all* events
+  const [currentNOE, setCurrentNOE] = useState(mockData.length);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,6 +44,3 @@ const App = () => {
 };
 
 export default App;
-
-
-

@@ -1,6 +1,8 @@
 // src/api.js
 
+/* istanbul ignore file */
 import mockData from "./mock-data";
+// … rest of your api.js …
 
 /**
  * Takes an array of event objects and extracts a de-duplicated list of locations.

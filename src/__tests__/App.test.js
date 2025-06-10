@@ -83,4 +83,27 @@ describe("<App /> integration", () => {
       expect(li.textContent).toContain("Berlin, Germany")
     );
   });
+
+  test("Scenario 2: user can change the number of events displayed", async () => {
+    const user = userEvent.setup();
+    const utils = render(<App />);
+    const { findAllByRole, container } = utils;
+
+    // GIVEN the user has just opened the app
+    // wait for the full list
+    const initialItems = await findAllByRole("listitem");
+    const allEvents = await getEvents();
+    expect(initialItems).toHaveLength(allEvents.length);
+
+    // WHEN the user changes the value of the “number of events” input field
+    const numberInput = container.querySelector("#number-of-events");
+    await user.clear(numberInput);
+    await user.type(numberInput, "10");
+
+    // THEN the number of events in the list will change accordingly
+    await waitFor(async () => {
+      const updatedItems = await findAllByRole("listitem");
+      expect(updatedItems).toHaveLength(10);
+    });
+  });
 });

@@ -94,7 +94,7 @@ Meet is a progressive web application (PWA) that provides users with a list of e
 
 ## Serverless Architecture Diagram
 
-![Meet App Serverless Architecture] ![Workflow](Images/Workflow.png)
+![Meet App Serverless Architecture](Images/Workflow.png)
 
 The Meet App follows a serverless architecture. The React frontend communicates with serverless functions via HTTPS. These functions handle user authentication, event data fetching, and sending email confirmations. Serverless functions interact with a hosted database and hosted file storage. This design ensures scalability, cost-efficiency, and minimal server maintenance.
 

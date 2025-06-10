@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1749573759863" clover="3.2.0">
-  <project timestamp="1749573759863" name="All files">
+<coverage generated="1749574155186" clover="3.2.0">
+  <project timestamp="1749574155186" name="All files">
     <metrics statements="54" coveredstatements="53" conditionals="13" coveredconditionals="11" methods="22" coveredmethods="20" elements="89" coveredelements="84" complexity="0" loc="54" ncloc="54" packages="2" files="6" classes="6"/>
     <package name="src">
       <metrics statements="15" coveredstatements="15" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4"/>
@@ -65,7 +65,7 @@
         <line num="6" count="24" type="stmt"/>
         <line num="9" count="379" type="stmt"/>
       </file>
-      <file name="NumberofEvents.jsx" path="C:\Users\troyo\OneDrive\Full Stack\Meet App\meet\src\components\NumberofEvents.jsx">
+      <file name="NumberOfEvents.jsx" path="C:\Users\troyo\OneDrive\Full Stack\Meet App\meet\src\components\NumberOfEvents.jsx">
         <metrics statements="11" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
         <line num="5" count="4" type="stmt"/>
         <line num="7" count="34" type="stmt"/>

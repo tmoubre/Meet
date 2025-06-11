@@ -1,4 +1,4 @@
-// src/components/EventList.jsx
+// EventList.jsx
 import React from 'react';
 import Event from './Event';
 

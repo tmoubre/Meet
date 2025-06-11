@@ -108,3 +108,71 @@ Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+...
+
+## Features
+
+- Filter events by city
+- Show/hide event details
+- Set the number of events displayed
+- Work offline with cached event data
+- Add the app to the home screen
+- Visualize event data with interactive charts
+
+## Testing
+
+Testing in the Meet App is implemented using **Jest**, **React Testing Library**, **Puppeteer**, and **jest-cucumber** to ensure robust test coverage across all user-facing features.
+
+### ✅ Unit and Integration Testing
+
+- **Event Component**
+  - Renders correctly with mock data
+  - Expands and collapses details on interaction
+- **CitySearch Component**
+  - Displays location suggestions based on input
+  - Filters events by city selection
+- **NumberOfEvents Component**
+  - Handles user input to change event count
+  - Updates event list accordingly
+- **App Component**
+  - Integrates all subcomponents
+  - Displays filtered and limited event lists
+
+### ✅ Behavior-Driven Development (BDD)
+
+BDD-style tests written with [`jest-cucumber`](https://github.com/bencompton/jest-cucumber) match user stories directly to test scenarios.
+
+#### Feature: Show/Hide Event Details
+- Verifies events are collapsed by default
+- Expands to show details on click
+- Collapses again on second click
+
+#### Feature: Specify Number of Events
+- User can input desired number of events
+- App updates displayed event list dynamically
+
+#### Feature: Filter Events by City
+- User types a city and sees suggestions
+- Selecting a suggestion filters the event list
+
+### ✅ End-to-End Testing
+
+- Full integration test validates:
+  - City filtering
+  - Event detail toggling
+  - Custom number of events
+  - Interaction with multiple components together
+
+Test files include:
+- `src/__tests__/App.test.js`
+- `src/__tests__/CitySearch.test.js`
+- `src/__tests__/EventList.test.js`
+- `src/__tests__/Event.test.js`
+- `src/__tests__/NumberOfEvents.test.js`
+- `src/__tests__/EndToEnd.test.js`
+- `src/features/showHideAnEventsDetails.test.js`
+- `src/features/specifyNumberOfEvents.test.js`
+- `src/features/filterEventsByCity.test.js`
+
+...
+

@@ -12,6 +12,7 @@
     "coverage": "react-scripts test --env=jsdom --watchAll=false --coverage"
   },
   "dependencies": {
+    "atatus-spa": "^4.6.4",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },

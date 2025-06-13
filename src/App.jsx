@@ -17,20 +17,23 @@ const App = () => {
   const [infoAlert, setInfoAlert] = useState('');
   const [errorAlert, setErrorAlert] = useState('');
 
+  // PWA install modal state
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
-  const [installAvailable, setInstallAvailable] = useState(false);
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
+      console.log('🔔 beforeinstallprompt event fired');
       e.preventDefault();
-      console.log('✅ beforeinstallprompt event fired');
       setDeferredPrompt(e);
       setShowInstallPrompt(true);
-      setInstallAvailable(true);
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    window.addEventListener('appinstalled', () => {
+      console.log('✅ App was installed');
+    });
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -38,13 +41,17 @@ const App = () => {
   }, []);
 
   const handleInstallClick = async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    console.log(`🟩 User ${outcome === 'accepted' ? 'accepted' : 'dismissed'} the install prompt`);
-    setDeferredPrompt(null);
-    setShowInstallPrompt(false);
-    setInstallAvailable(false);
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        console.log('📲 User accepted the install prompt');
+      } else {
+        console.log('❌ User dismissed the install prompt');
+      }
+      setDeferredPrompt(null);
+      setShowInstallPrompt(false);
+    }
   };
 
   useEffect(() => {
@@ -67,18 +74,22 @@ const App = () => {
         {errorAlert && <ErrorAlert text={errorAlert} />}
       </div>
 
+      {/* Install Modal */}
       {showInstallPrompt && (
-        <div className="install-modal" style={{ border: '1px solid #ccc', padding: '1rem', margin: '1rem', background: '#f9f9f9' }}>
-          <p>Install this app for a better experience.</p>
-          <button onClick={handleInstallClick}>Install App</button>
-          <button onClick={() => setShowInstallPrompt(false)}>Maybe later</button>
+        <div className="install-modal">
+          <div className="modal-content">
+            <p>Install this app for a better experience.</p>
+            <button onClick={handleInstallClick}>Install App</button>
+            <button onClick={() => setShowInstallPrompt(false)}>Maybe later</button>
+          </div>
         </div>
       )}
 
-      {installAvailable && !showInstallPrompt && (
-        <div style={{ marginBottom: '1rem' }}>
+      {/* Manual Install Link */}
+      {deferredPrompt && !showInstallPrompt && (
+        <div className="install-link">
           <button onClick={() => setShowInstallPrompt(true)}>
-            Click here to install this app
+            📥 Install App
           </button>
         </div>
       )}
@@ -99,4 +110,3 @@ const App = () => {
 };
 
 export default App;
-

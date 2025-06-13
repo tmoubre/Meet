@@ -34,12 +34,12 @@
   "screenshots": [
     {
       "src": "screenshot1.png",
-      "sizes": "1899x896",
+      "sizes": "1024x1536",
       "type": "image/png",
       "form_factor": "narrow"
     },
     {
-      "src": "screenshot2.png",
+      "src": "Screenshot2.png",
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide"

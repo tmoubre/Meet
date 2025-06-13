@@ -19,19 +19,33 @@ const App = () => {
 
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
-  const [installDismissed, setInstallDismissed] = useState(false);
+  const [installAvailable, setInstallAvailable] = useState(false);
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
       e.preventDefault();
+      console.log('✅ beforeinstallprompt event fired');
       setDeferredPrompt(e);
       setShowInstallPrompt(true);
+      setInstallAvailable(true);
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    return () =>
+
+    return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
   }, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log(`🟩 User ${outcome === 'accepted' ? 'accepted' : 'dismissed'} the install prompt`);
+    setDeferredPrompt(null);
+    setShowInstallPrompt(false);
+    setInstallAvailable(false);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,47 +60,25 @@ const App = () => {
     fetchData();
   }, [currentCity, currentNOE]);
 
-  const handleInstallClick = async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === 'accepted') {
-        console.log('User accepted the install prompt');
-      } else {
-        console.log('User dismissed the install prompt');
-      }
-      setShowInstallPrompt(false);
-      setInstallDismissed(true);
-      setDeferredPrompt(null);
-    }
-  };
-
   return (
     <div className="App">
       <div className="alerts-container">
-        {infoAlert.length > 0 && <InfoAlert text={infoAlert} />}
-        {errorAlert.length > 0 && <ErrorAlert text={errorAlert} />}
+        {infoAlert && <InfoAlert text={infoAlert} />}
+        {errorAlert && <ErrorAlert text={errorAlert} />}
       </div>
 
       {showInstallPrompt && (
-        <div className="install-modal">
-          <div className="modal-content">
-            <p>Install this app for a better experience.</p>
-            <button onClick={handleInstallClick}>Install App</button>
-            <button onClick={() => {
-              setShowInstallPrompt(false);
-              setInstallDismissed(true);
-            }}>
-              Maybe later
-            </button>
-          </div>
+        <div className="install-modal" style={{ border: '1px solid #ccc', padding: '1rem', margin: '1rem', background: '#f9f9f9' }}>
+          <p>Install this app for a better experience.</p>
+          <button onClick={handleInstallClick}>Install App</button>
+          <button onClick={() => setShowInstallPrompt(false)}>Maybe later</button>
         </div>
       )}
 
-      {installDismissed && (
-        <div style={{ textAlign: 'center', margin: '10px 0' }}>
+      {installAvailable && !showInstallPrompt && (
+        <div style={{ marginBottom: '1rem' }}>
           <button onClick={() => setShowInstallPrompt(true)}>
-            Reopen Install Prompt
+            Click here to install this app
           </button>
         </div>
       )}
@@ -107,3 +99,4 @@ const App = () => {
 };
 
 export default App;
+

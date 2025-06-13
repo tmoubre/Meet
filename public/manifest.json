@@ -34,11 +34,10 @@
   "screenshots": [
     {
       "src": "screenshot1.png",
+      "sizes": "720x540",
       "type": "image/png",
-      "sizes": "1899x896",
-      "form_factor": "wide",
-      "label": "Main event listing page",
-      "platform": "wide"
+      "form_factor": "narrow"
     }
   ]
 }
+

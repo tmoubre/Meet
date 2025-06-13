@@ -16,43 +16,21 @@ const App = () => {
   const [currentNOE, setCurrentNOE] = useState(mockData.length);
   const [infoAlert, setInfoAlert] = useState('');
   const [errorAlert, setErrorAlert] = useState('');
+  const [showIosInstallBanner, setShowIosInstallBanner] = useState(false);
 
-  // PWA install modal state
-  const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const [showInstallModal, setShowInstallModal] = useState(false);
+  // iOS detection
+  const isIos = () => {
+    return /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+  };
+
+  const isInStandaloneMode = () =>
+    'standalone' in window.navigator && window.navigator.standalone;
 
   useEffect(() => {
-    const handleBeforeInstallPrompt = (e) => {
-      e.preventDefault(); // Prevent automatic prompt
-      setDeferredPrompt(e);
-      setShowInstallModal(true); // Automatically show modal
-    };
-
-    const handleAppInstalled = () => {
-      console.log('✅ App was installed');
-    };
-
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    window.addEventListener('appinstalled', handleAppInstalled);
-
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-      window.removeEventListener('appinstalled', handleAppInstalled);
-    };
-  }, []);
-
-  const handleInstallNow = async () => {
-    if (!deferredPrompt) return;
-    try {
-      await deferredPrompt.prompt();
-      const result = await deferredPrompt.userChoice;
-      console.log('User choice:', result.outcome);
-      setShowInstallModal(false);
-      setDeferredPrompt(null);
-    } catch (error) {
-      console.error('Install prompt failed:', error);
+    if (isIos() && !isInStandaloneMode()) {
+      setShowIosInstallBanner(true);
     }
-  };
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,14 +52,13 @@ const App = () => {
         {errorAlert && <ErrorAlert text={errorAlert} />}
       </div>
 
-      {/* Install Modal - shown automatically if supported */}
-      {showInstallModal && (
-        <div className="install-modal">
-          <div className="modal-content">
-            <p>Install the Meet App for a better experience.</p>
-            <button onClick={handleInstallNow}>Install App</button>
-            <button onClick={() => setShowInstallModal(false)}>Maybe later</button>
-          </div>
+      {/* iOS Install Instructions */}
+      {showIosInstallBanner && (
+        <div className="ios-install-banner">
+          <p>
+            To install this app, tap <strong>Share</strong> then <strong>Add to Home Screen</strong>.
+          </p>
+          <button onClick={() => setShowIosInstallBanner(false)}>Dismiss</button>
         </div>
       )}
 
@@ -101,4 +78,5 @@ const App = () => {
 };
 
 export default App;
+
 

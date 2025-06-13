@@ -17,25 +17,27 @@ const App = () => {
   const [infoAlert, setInfoAlert] = useState('');
   const [errorAlert, setErrorAlert] = useState('');
 
-  // PWA install modal state
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
-      console.log('🔔 beforeinstallprompt event fired');
       e.preventDefault();
+      console.log('✅ beforeinstallprompt event fired');
       setDeferredPrompt(e);
+      setShowInstallPrompt(true);
+    };
+
+    const handleAppInstalled = () => {
+      console.log('✅ App was installed');
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-
-    window.addEventListener('appinstalled', () => {
-      console.log('✅ App was installed');
-    });
+    window.addEventListener('appinstalled', handleAppInstalled);
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
     };
   }, []);
 
@@ -49,7 +51,7 @@ const App = () => {
         console.log('❌ User dismissed the install prompt');
       }
       setDeferredPrompt(null);
-      setShowInstallPrompt(false);
+      setTimeout(() => setShowInstallPrompt(true), 15000); // Show modal again after 15 seconds
     }
   };
 
@@ -73,7 +75,6 @@ const App = () => {
         {errorAlert && <ErrorAlert text={errorAlert} />}
       </div>
 
-      {/* Install Modal */}
       {showInstallPrompt && (
         <div className="install-modal">
           <div className="modal-content">
@@ -83,26 +84,6 @@ const App = () => {
           </div>
         </div>
       )}
-
-      {/* Persistent Install Button */}
-      <div className="persistent-install-button">
-        <button
-          disabled={!deferredPrompt}
-          onClick={() => {
-            if (deferredPrompt) {
-              setShowInstallPrompt(true);
-            }
-          }}
-          style={{ opacity: deferredPrompt ? 1 : 0.5 }}
-        >
-          📥 Install App
-        </button>
-        {!deferredPrompt && (
-          <small style={{ display: 'block', marginTop: '5px' }}>
-            App not yet installable.
-          </small>
-        )}
-      </div>
 
       <CitySearch
         allLocations={allLocations}

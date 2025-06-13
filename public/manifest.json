@@ -27,5 +27,14 @@
   "scope": "/",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "screenshots": [
+  {
+    "src": "screenshot1.png",
+    "sizes": "720x540",
+    "type": "image/png",
+    "form_factor": "wide"
+  }
+]
 }
+

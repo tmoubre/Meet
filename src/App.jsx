@@ -17,26 +17,21 @@ const App = () => {
   const [infoAlert, setInfoAlert] = useState('');
   const [errorAlert, setErrorAlert] = useState('');
 
-  // PWA install logic
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
-  const [installDismissed, setInstallDismissed] = useState(
-    localStorage.getItem('installPromptDismissed') === 'true'
-  );
+  const [installDismissed, setInstallDismissed] = useState(false);
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
-      if (!installDismissed) {
-        setShowInstallPrompt(true);
-      }
+      setShowInstallPrompt(true);
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     return () =>
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-  }, [installDismissed]);
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,6 +46,21 @@ const App = () => {
     fetchData();
   }, [currentCity, currentNOE]);
 
+  const handleInstallClick = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+      } else {
+        console.log('User dismissed the install prompt');
+      }
+      setShowInstallPrompt(false);
+      setInstallDismissed(true);
+      setDeferredPrompt(null);
+    }
+  };
+
   return (
     <div className="App">
       <div className="alerts-container">
@@ -58,42 +68,22 @@ const App = () => {
         {errorAlert.length > 0 && <ErrorAlert text={errorAlert} />}
       </div>
 
-      {/* Modal Install Prompt */}
       {showInstallPrompt && (
         <div className="install-modal">
           <div className="modal-content">
             <p>Install this app for a better experience.</p>
-            <button
-              onClick={async () => {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                  console.log('User accepted the install prompt');
-                } else {
-                  console.log('User dismissed the install prompt');
-                }
-                setShowInstallPrompt(false);
-                localStorage.setItem('installPromptDismissed', 'true');
-                setInstallDismissed(true);
-              }}
-            >
-              Install App
-            </button>
-            <button
-              onClick={() => {
-                setShowInstallPrompt(false);
-                localStorage.setItem('installPromptDismissed', 'true');
-                setInstallDismissed(true);
-              }}
-            >
+            <button onClick={handleInstallClick}>Install App</button>
+            <button onClick={() => {
+              setShowInstallPrompt(false);
+              setInstallDismissed(true);
+            }}>
               Maybe later
             </button>
           </div>
         </div>
       )}
 
-      {/* Reopen Modal Link */}
-      {!showInstallPrompt && installDismissed && deferredPrompt && (
+      {installDismissed && (
         <div style={{ textAlign: 'center', margin: '10px 0' }}>
           <button onClick={() => setShowInstallPrompt(true)}>
             Reopen Install Prompt

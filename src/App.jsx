@@ -19,18 +19,17 @@ const App = () => {
 
   // 🔻 PWA install prompt logic
   const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const [showInstallButton, setShowInstallButton] = useState(false);
+  const [showInstallPrompt, setShowInstallPrompt] = useState(false); // ✅ Corrected
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
-      setShowInstallButton(true);
+      setShowInstallPrompt(true); // ✅ Consistent name
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    return () =>
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
   }, []);
 
   const handleInstallClick = async () => {
@@ -43,7 +42,7 @@ const App = () => {
         console.log('User dismissed the install prompt');
       }
       setDeferredPrompt(null);
-      setShowInstallButton(false);
+      setShowInstallPrompt(false);
     }
   };
   // 🔺 End PWA logic
@@ -68,11 +67,14 @@ const App = () => {
         {errorAlert.length > 0 && <ErrorAlert text={errorAlert} />}
       </div>
 
-      {/* 🔽 Optional: install button style this as needed */}
-      {showInstallButton && (
-        <button className="install-btn" onClick={handleInstallClick}>
-          Install App
-        </button>
+      {showInstallPrompt && (
+        <div className="install-modal">
+          <div className="modal-content">
+            <p>Install this app for a better experience.</p>
+            <button onClick={handleInstallClick}>Install App</button>
+            <button onClick={() => setShowInstallPrompt(false)}>Maybe later</button>
+          </div>
+        </div>
       )}
 
       <CitySearch
@@ -91,3 +93,4 @@ const App = () => {
 };
 
 export default App;
+

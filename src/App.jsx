@@ -1,3 +1,5 @@
+// App.jsx
+
 import React, { useState, useEffect } from 'react';
 import CitySearch from './components/CitySearch';
 import NumberOfEvents from './components/NumberOfEvents';
@@ -15,12 +17,13 @@ const App = () => {
   const [infoAlert, setInfoAlert] = useState('');
   const [errorAlert, setErrorAlert] = useState('');
 
+  // PWA install modal state
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
-      console.log('🔔 beforeinstallprompt event fired');
+      console.log('📦 beforeinstallprompt event triggered');
       e.preventDefault();
       setDeferredPrompt(e);
       setShowInstallPrompt(true);
@@ -30,8 +33,6 @@ const App = () => {
 
     window.addEventListener('appinstalled', () => {
       console.log('✅ App was installed');
-      setDeferredPrompt(null);
-      setShowInstallPrompt(false);
     });
 
     return () => {
@@ -41,9 +42,14 @@ const App = () => {
 
   const handleInstallClick = async () => {
     if (deferredPrompt) {
+      console.log('🚀 Prompting install');
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
-      console.log(outcome === 'accepted' ? '📲 User accepted install' : '❌ User dismissed install');
+      if (outcome === 'accepted') {
+        console.log('✅ User accepted the install prompt');
+      } else {
+        console.log('❌ User dismissed the install prompt');
+      }
       setDeferredPrompt(null);
       setShowInstallPrompt(false);
     }
@@ -69,33 +75,22 @@ const App = () => {
         {errorAlert && <ErrorAlert text={errorAlert} />}
       </div>
 
-      {/* Modal for install prompt */}
+      {/* Install Modal */}
       {showInstallPrompt && (
-        <div className="install-modal" role="dialog" aria-labelledby="install-dialog">
+        <div className="install-modal">
           <div className="modal-content">
-            <p id="install-dialog">Install this app for a better experience.</p>
+            <p>Install this app for a better experience.</p>
             <button onClick={handleInstallClick}>Install App</button>
             <button onClick={() => setShowInstallPrompt(false)}>Maybe later</button>
           </div>
         </div>
       )}
 
-      {/* Manual Install Link - shown anytime prompt is available */}
-      {deferredPrompt && (
-        <div className="install-link" style={{ textAlign: 'center', marginTop: '10px' }}>
-          <button
-            onClick={() => setShowInstallPrompt(true)}
-            aria-label="Open install modal"
-            style={{
-              padding: '0.5em 1em',
-              backgroundColor: '#007bff',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: 'pointer',
-            }}
-          >
-            📥 Install App
+      {/* Manual Install Link for Debugging */}
+      {!window.matchMedia('(display-mode: standalone)').matches && deferredPrompt && !showInstallPrompt && (
+        <div className="install-link">
+          <button onClick={() => setShowInstallPrompt(true)}>
+            📥 Re-open Install Prompt
           </button>
         </div>
       )}

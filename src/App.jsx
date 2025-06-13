@@ -19,17 +19,18 @@ const App = () => {
 
   // 🔻 PWA install prompt logic
   const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const [showInstallPrompt, setShowInstallPrompt] = useState(false); // ✅ Corrected
+  const [showInstallPrompt, setShowInstallPrompt] = useState(false);
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
-      setShowInstallPrompt(true); // ✅ Consistent name
+      setShowInstallPrompt(true); // Show modal prompt
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    return () =>
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
   }, []);
 
   const handleInstallClick = async () => {
@@ -67,13 +68,23 @@ const App = () => {
         {errorAlert.length > 0 && <ErrorAlert text={errorAlert} />}
       </div>
 
-      {showInstallPrompt && (
+      {/* PWA Install Modal */}
+      {showInstallPrompt && deferredPrompt && (
         <div className="install-modal">
           <div className="modal-content">
             <p>Install this app for a better experience.</p>
             <button onClick={handleInstallClick}>Install App</button>
             <button onClick={() => setShowInstallPrompt(false)}>Maybe later</button>
           </div>
+        </div>
+      )}
+
+      {/* Reopen Install Prompt Button */}
+      {deferredPrompt && !showInstallPrompt && (
+        <div style={{ textAlign: 'center', marginTop: '10px' }}>
+          <button onClick={() => setShowInstallPrompt(true)}>
+            Reopen Install Prompt
+          </button>
         </div>
       )}
 
@@ -93,4 +104,3 @@ const App = () => {
 };
 
 export default App;
-

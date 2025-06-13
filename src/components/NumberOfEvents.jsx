@@ -2,7 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 
-const NumberOfEvents = ({ currentNOE, setCurrentNOE, setErrorAlert }) => {
+const NumberOfEvents = ({
+  currentNOE,
+  setCurrentNOE,
+  setErrorAlert = () => {} // ✅ default fallback for tests or missing props
+}) => {
   // keep an internal state so the input display updates immediately
   const [number, setNumber] = useState(currentNOE);
 

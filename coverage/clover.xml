@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1749819658605" clover="3.2.0">
-  <project timestamp="1749819658605" name="All files">
-    <metrics statements="67" coveredstatements="57" conditionals="18" coveredconditionals="14" methods="27" coveredmethods="21" elements="112" coveredelements="92" complexity="0" loc="67" ncloc="67" packages="2" files="7" classes="7"/>
+<coverage generated="1749821957347" clover="3.2.0">
+  <project timestamp="1749821957347" name="All files">
+    <metrics statements="74" coveredstatements="70" conditionals="25" coveredconditionals="21" methods="29" coveredmethods="26" elements="128" coveredelements="117" complexity="0" loc="74" ncloc="74" packages="2" files="7" classes="7"/>
     <package name="src">
-      <metrics statements="16" coveredstatements="16" conditionals="4" coveredconditionals="3" methods="4" coveredmethods="4"/>
+      <metrics statements="17" coveredstatements="17" conditionals="6" coveredconditionals="5" methods="4" coveredmethods="4"/>
       <file name="App.jsx" path="C:\Users\troyo\OneDrive\Full Stack\Meet App\meet\src\App.jsx">
-        <metrics statements="15" coveredstatements="15" conditionals="4" coveredconditionals="3" methods="4" coveredmethods="4"/>
+        <metrics statements="16" coveredstatements="16" conditionals="6" coveredconditionals="5" methods="4" coveredmethods="4"/>
         <line num="12" count="6" type="stmt"/>
-        <line num="13" count="48" type="stmt"/>
-        <line num="14" count="48" type="stmt"/>
-        <line num="15" count="48" type="stmt"/>
-        <line num="16" count="48" type="stmt"/>
-        <line num="17" count="48" type="stmt"/>
-        <line num="19" count="48" type="stmt"/>
-        <line num="20" count="24" type="stmt"/>
-        <line num="21" count="24" type="stmt"/>
-        <line num="23" count="24" type="cond" truecount="2" falsecount="0"/>
-        <line num="25" count="70" type="stmt"/>
-        <line num="26" count="24" type="stmt"/>
-        <line num="27" count="24" type="stmt"/>
-        <line num="29" count="24" type="stmt"/>
-        <line num="32" count="48" type="stmt"/>
+        <line num="13" count="46" type="stmt"/>
+        <line num="14" count="46" type="stmt"/>
+        <line num="15" count="46" type="stmt"/>
+        <line num="16" count="46" type="stmt"/>
+        <line num="17" count="46" type="stmt"/>
+        <line num="18" count="46" type="stmt"/>
+        <line num="20" count="46" type="stmt"/>
+        <line num="21" count="22" type="stmt"/>
+        <line num="22" count="22" type="stmt"/>
+        <line num="24" count="22" type="cond" truecount="2" falsecount="0"/>
+        <line num="26" count="70" type="stmt"/>
+        <line num="27" count="22" type="stmt"/>
+        <line num="28" count="22" type="stmt"/>
+        <line num="30" count="22" type="stmt"/>
+        <line num="33" count="46" type="stmt"/>
       </file>
       <file name="mock-data.js" path="C:\Users\troyo\OneDrive\Full Stack\Meet App\meet\src\mock-data.js">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -28,28 +29,31 @@
       </file>
     </package>
     <package name="src.components">
-      <metrics statements="51" coveredstatements="41" conditionals="14" coveredconditionals="11" methods="23" coveredmethods="17"/>
+      <metrics statements="57" coveredstatements="53" conditionals="19" coveredconditionals="16" methods="25" coveredmethods="22"/>
       <file name="Alert.jsx" path="C:\Users\troyo\OneDrive\Full Stack\Meet App\meet\src\components\Alert.jsx">
-        <metrics statements="9" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="31" count="0" type="stmt"/>
+        <metrics statements="12" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="4"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="31" count="2" type="stmt"/>
         <line num="42" count="0" type="stmt"/>
         <line num="43" count="0" type="stmt"/>
         <line num="44" count="0" type="stmt"/>
+        <line num="51" count="2" type="stmt"/>
+        <line num="52" count="2" type="stmt"/>
+        <line num="53" count="2" type="stmt"/>
       </file>
       <file name="CitySearch.jsx" path="C:\Users\troyo\OneDrive\Full Stack\Meet App\meet\src\components\CitySearch.jsx">
         <metrics statements="23" coveredstatements="22" conditionals="7" coveredconditionals="5" methods="11" coveredmethods="9"/>
         <line num="5" count="6" type="cond" truecount="2" falsecount="1"/>
-        <line num="6" count="139" type="stmt"/>
-        <line num="7" count="139" type="stmt"/>
-        <line num="8" count="139" type="stmt"/>
-        <line num="10" count="139" type="stmt"/>
-        <line num="11" count="47" type="stmt"/>
-        <line num="14" count="139" type="stmt"/>
+        <line num="6" count="135" type="stmt"/>
+        <line num="7" count="135" type="stmt"/>
+        <line num="8" count="135" type="stmt"/>
+        <line num="10" count="135" type="stmt"/>
+        <line num="11" count="45" type="stmt"/>
+        <line num="14" count="135" type="stmt"/>
         <line num="15" count="30" type="stmt"/>
         <line num="16" count="30" type="stmt"/>
         <line num="17" count="30" type="stmt"/>
@@ -57,12 +61,12 @@
         <line num="20" count="30" type="stmt"/>
         <line num="23" count="30" type="cond" truecount="1" falsecount="1"/>
         <line num="26" count="30" type="stmt"/>
-        <line num="29" count="139" type="stmt"/>
+        <line num="29" count="135" type="stmt"/>
         <line num="30" count="3" type="stmt"/>
         <line num="31" count="3" type="stmt"/>
         <line num="32" count="3" type="stmt"/>
         <line num="33" count="3" type="stmt"/>
-        <line num="36" count="139" type="stmt"/>
+        <line num="36" count="135" type="stmt"/>
         <line num="43" count="7" type="stmt"/>
         <line num="49" count="42" type="stmt"/>
         <line num="53" count="0" type="stmt"/>
@@ -70,30 +74,33 @@
       <file name="Event.jsx" path="C:\Users\troyo\OneDrive\Full Stack\Meet App\meet\src\components\Event.jsx">
         <metrics statements="5" coveredstatements="5" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
         <line num="5" count="7" type="stmt"/>
-        <line num="6" count="770" type="stmt"/>
-        <line num="8" count="770" type="stmt"/>
+        <line num="6" count="840" type="stmt"/>
+        <line num="8" count="840" type="stmt"/>
         <line num="9" count="6" type="stmt"/>
-        <line num="12" count="770" type="stmt"/>
+        <line num="12" count="840" type="stmt"/>
       </file>
       <file name="EventList.jsx" path="C:\Users\troyo\OneDrive\Full Stack\Meet App\meet\src\components\EventList.jsx">
         <metrics statements="3" coveredstatements="3" conditionals="1" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="5" count="6" type="cond" truecount="0" falsecount="1"/>
-        <line num="6" count="48" type="stmt"/>
-        <line num="9" count="758" type="stmt"/>
+        <line num="6" count="46" type="stmt"/>
+        <line num="9" count="828" type="stmt"/>
       </file>
       <file name="NumberOfEvents.jsx" path="C:\Users\troyo\OneDrive\Full Stack\Meet App\meet\src\components\NumberOfEvents.jsx">
-        <metrics statements="11" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+        <metrics statements="14" coveredstatements="14" conditionals="7" coveredconditionals="7" methods="4" coveredmethods="4"/>
         <line num="5" count="7" type="stmt"/>
-        <line num="7" count="64" type="stmt"/>
-        <line num="10" count="64" type="stmt"/>
-        <line num="11" count="27" type="stmt"/>
-        <line num="14" count="64" type="stmt"/>
-        <line num="15" count="9" type="stmt"/>
-        <line num="16" count="9" type="stmt"/>
-        <line num="17" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="11" count="60" type="stmt"/>
+        <line num="14" count="60" type="stmt"/>
+        <line num="15" count="25" type="stmt"/>
+        <line num="18" count="60" type="stmt"/>
         <line num="19" count="9" type="stmt"/>
         <line num="20" count="9" type="stmt"/>
-        <line num="23" count="64" type="stmt"/>
+        <line num="21" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="9" type="stmt"/>
+        <line num="25" count="9" type="cond" truecount="4" falsecount="0"/>
+        <line num="26" count="3" type="stmt"/>
+        <line num="28" count="6" type="stmt"/>
+        <line num="29" count="6" type="stmt"/>
+        <line num="33" count="60" type="stmt"/>
       </file>
     </package>
   </project>

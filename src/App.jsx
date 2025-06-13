@@ -23,10 +23,9 @@ const App = () => {
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
-      console.log('📦 beforeinstallprompt event triggered');
+      console.log('🔔 beforeinstallprompt event fired');
       e.preventDefault();
       setDeferredPrompt(e);
-      setShowInstallPrompt(true);
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -42,11 +41,10 @@ const App = () => {
 
   const handleInstallClick = async () => {
     if (deferredPrompt) {
-      console.log('🚀 Prompting install');
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
       if (outcome === 'accepted') {
-        console.log('✅ User accepted the install prompt');
+        console.log('📲 User accepted the install prompt');
       } else {
         console.log('❌ User dismissed the install prompt');
       }
@@ -86,14 +84,25 @@ const App = () => {
         </div>
       )}
 
-      {/* Manual Install Link for Debugging */}
-      {!window.matchMedia('(display-mode: standalone)').matches && deferredPrompt && !showInstallPrompt && (
-        <div className="install-link">
-          <button onClick={() => setShowInstallPrompt(true)}>
-            📥 Re-open Install Prompt
-          </button>
-        </div>
-      )}
+      {/* Persistent Install Button */}
+      <div className="persistent-install-button">
+        <button
+          disabled={!deferredPrompt}
+          onClick={() => {
+            if (deferredPrompt) {
+              setShowInstallPrompt(true);
+            }
+          }}
+          style={{ opacity: deferredPrompt ? 1 : 0.5 }}
+        >
+          📥 Install App
+        </button>
+        {!deferredPrompt && (
+          <small style={{ display: 'block', marginTop: '5px' }}>
+            App not yet installable.
+          </small>
+        )}
+      </div>
 
       <CitySearch
         allLocations={allLocations}

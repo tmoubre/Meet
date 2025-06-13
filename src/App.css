@@ -155,3 +155,18 @@ input[type="number"] {
   word-break: break-word;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+.install-btn {
+  margin: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.install-btn:hover {
+  background-color: #0056b3;
+}

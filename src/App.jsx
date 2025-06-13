@@ -17,6 +17,37 @@ const App = () => {
   const [infoAlert, setInfoAlert] = useState('');
   const [errorAlert, setErrorAlert] = useState('');
 
+  // 🔻 PWA install prompt logic
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [showInstallButton, setShowInstallButton] = useState(false);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setShowInstallButton(true);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    return () =>
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const choice = await deferredPrompt.userChoice;
+      if (choice.outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+      } else {
+        console.log('User dismissed the install prompt');
+      }
+      setDeferredPrompt(null);
+      setShowInstallButton(false);
+    }
+  };
+  // 🔺 End PWA logic
+
   useEffect(() => {
     const fetchData = async () => {
       const allEvents = await getEvents();
@@ -36,6 +67,14 @@ const App = () => {
         {infoAlert.length > 0 && <InfoAlert text={infoAlert} />}
         {errorAlert.length > 0 && <ErrorAlert text={errorAlert} />}
       </div>
+
+      {/* 🔽 Optional: install button style this as needed */}
+      {showInstallButton && (
+        <button className="install-btn" onClick={handleInstallClick}>
+          Install App
+        </button>
+      )}
+
       <CitySearch
         allLocations={allLocations}
         setCurrentCity={setCurrentCity}
@@ -52,5 +91,3 @@ const App = () => {
 };
 
 export default App;
-
-

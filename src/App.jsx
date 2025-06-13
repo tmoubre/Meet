@@ -17,41 +17,40 @@ const App = () => {
   const [infoAlert, setInfoAlert] = useState('');
   const [errorAlert, setErrorAlert] = useState('');
 
+  // PWA install modal state
   const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const [showInstallPrompt, setShowInstallPrompt] = useState(false);
+  const [showInstallModal, setShowInstallModal] = useState(false);
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
-      console.log('beforeinstallprompt event fired');
-      e.preventDefault();
+      e.preventDefault(); // Prevent automatic prompt
       setDeferredPrompt(e);
-      setShowInstallPrompt(true);
+      setShowInstallModal(true); // Automatically show modal
+    };
+
+    const handleAppInstalled = () => {
+      console.log('✅ App was installed');
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-
-    window.addEventListener('appinstalled', () => {
-      console.log('App was installed');
-      setDeferredPrompt(null);
-      setShowInstallPrompt(false);
-    });
+    window.addEventListener('appinstalled', handleAppInstalled);
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
     };
   }, []);
 
-  const handleInstallClick = async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === 'accepted') {
-        console.log('User accepted the install prompt');
-      } else {
-        console.log('User dismissed the install prompt');
-      }
+  const handleInstallNow = async () => {
+    if (!deferredPrompt) return;
+    try {
+      await deferredPrompt.prompt();
+      const result = await deferredPrompt.userChoice;
+      console.log('User choice:', result.outcome);
+      setShowInstallModal(false);
       setDeferredPrompt(null);
-      setShowInstallPrompt(false);
+    } catch (error) {
+      console.error('Install prompt failed:', error);
     }
   };
 
@@ -75,13 +74,13 @@ const App = () => {
         {errorAlert && <ErrorAlert text={errorAlert} />}
       </div>
 
-      {/* Install Modal */}
-      {showInstallPrompt && deferredPrompt && (
+      {/* Install Modal - shown automatically if supported */}
+      {showInstallModal && (
         <div className="install-modal">
           <div className="modal-content">
-            <p>Install this app for a better experience.</p>
-            <button onClick={handleInstallClick}>Install App</button>
-            <button onClick={() => setShowInstallPrompt(false)}>Maybe later</button>
+            <p>Install the Meet App for a better experience.</p>
+            <button onClick={handleInstallNow}>Install App</button>
+            <button onClick={() => setShowInstallModal(false)}>Maybe later</button>
           </div>
         </div>
       )}
@@ -102,3 +101,4 @@ const App = () => {
 };
 
 export default App;
+

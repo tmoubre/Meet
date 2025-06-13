@@ -2,7 +2,7 @@
 
 /* istanbul ignore file */
 import mockData from "./mock-data";
-import NProgress from "nprogress"; // ⬅️ Add this if not already imported
+import NProgress from "nprogress";
 
 /**
  * Takes an array of event objects and extracts a de-duplicated list of locations.
@@ -104,10 +104,14 @@ export const getEvents = async () => {
     return mockData;
   }
 
-  const token = await getAccessToken();
-  if (!token) {
-    return [];
+  if (!navigator.onLine) {
+    const events = localStorage.getItem("lastEvents");
+    NProgress.done();
+    return events ? JSON.parse(events) : [];
   }
+
+  const token = await getAccessToken();
+  if (!token) return [];
 
   try {
     const GET_EVENTS_LAMBDA =
@@ -118,7 +122,9 @@ export const getEvents = async () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ access_token: token }),
     });
-
+    if (!response.ok) {
+      throw new Error(`HTTP error fetching events: ${response.status}`);
+    }
     const result = await response.json();
     if (result) {
       NProgress.done();

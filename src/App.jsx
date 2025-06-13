@@ -1,5 +1,3 @@
-// App.jsx
-
 import React, { useState, useEffect } from 'react';
 import CitySearch from './components/CitySearch';
 import NumberOfEvents from './components/NumberOfEvents';
@@ -17,7 +15,6 @@ const App = () => {
   const [infoAlert, setInfoAlert] = useState('');
   const [errorAlert, setErrorAlert] = useState('');
 
-  // PWA install modal state
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
 
@@ -33,6 +30,8 @@ const App = () => {
 
     window.addEventListener('appinstalled', () => {
       console.log('✅ App was installed');
+      setDeferredPrompt(null);
+      setShowInstallPrompt(false);
     });
 
     return () => {
@@ -44,11 +43,7 @@ const App = () => {
     if (deferredPrompt) {
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === 'accepted') {
-        console.log('📲 User accepted the install prompt');
-      } else {
-        console.log('❌ User dismissed the install prompt');
-      }
+      console.log(outcome === 'accepted' ? '📲 User accepted install' : '❌ User dismissed install');
       setDeferredPrompt(null);
       setShowInstallPrompt(false);
     }
@@ -74,21 +69,32 @@ const App = () => {
         {errorAlert && <ErrorAlert text={errorAlert} />}
       </div>
 
-      {/* Install Modal */}
+      {/* Modal for install prompt */}
       {showInstallPrompt && (
-        <div className="install-modal">
+        <div className="install-modal" role="dialog" aria-labelledby="install-dialog">
           <div className="modal-content">
-            <p>Install this app for a better experience.</p>
+            <p id="install-dialog">Install this app for a better experience.</p>
             <button onClick={handleInstallClick}>Install App</button>
             <button onClick={() => setShowInstallPrompt(false)}>Maybe later</button>
           </div>
         </div>
       )}
 
-      {/* Manual Install Link */}
-      {deferredPrompt && !showInstallPrompt && (
-        <div className="install-link">
-          <button onClick={() => setShowInstallPrompt(true)}>
+      {/* Manual Install Link - shown anytime prompt is available */}
+      {deferredPrompt && (
+        <div className="install-link" style={{ textAlign: 'center', marginTop: '10px' }}>
+          <button
+            onClick={() => setShowInstallPrompt(true)}
+            aria-label="Open install modal"
+            style={{
+              padding: '0.5em 1em',
+              backgroundColor: '#007bff',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+            }}
+          >
             📥 Install App
           </button>
         </div>

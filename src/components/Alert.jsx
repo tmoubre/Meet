@@ -1,6 +1,5 @@
 // src/components/Alert.jsx
 
-
 import React, { Component } from 'react';
 
 // Base Alert class
@@ -54,4 +53,14 @@ class ErrorAlert extends Alert {
   }
 }
 
-export { InfoAlert, ErrorAlert };
+// WarningAlert subclass
+class WarningAlert extends Alert {
+  constructor(props) {
+    super(props);
+    this.color = 'rgb(255, 165, 0)';
+    this.bgColor = 'rgb(255, 245, 230)';
+  }
+}
+
+export { InfoAlert, ErrorAlert, WarningAlert };
+

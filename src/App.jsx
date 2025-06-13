@@ -7,7 +7,7 @@ import EventList from './components/EventList';
 import { extractLocations, getEvents } from './api';
 import mockData from './mock-data';
 import './App.css';
-import { InfoAlert, ErrorAlert } from './components/Alert';
+import { InfoAlert, ErrorAlert, WarningAlert } from './components/Alert';
 
 const App = () => {
   const [events, setEvents] = useState([]);
@@ -16,6 +16,7 @@ const App = () => {
   const [currentNOE, setCurrentNOE] = useState(mockData.length);
   const [infoAlert, setInfoAlert] = useState('');
   const [errorAlert, setErrorAlert] = useState('');
+  const [warningAlert, setWarningAlert] = useState('');
   const [showIosInstallBanner, setShowIosInstallBanner] = useState(false);
 
   // iOS detection
@@ -34,6 +35,11 @@ const App = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (navigator.onLine) {
+        setWarningAlert('');
+      } else {
+        setWarningAlert('You are offline. Displayed events may not be up to date.');
+      }
       const allEvents = await getEvents();
       const filtered =
         currentCity === 'See all cities'
@@ -50,6 +56,7 @@ const App = () => {
       <div className="alerts-container">
         {infoAlert && <InfoAlert text={infoAlert} />}
         {errorAlert && <ErrorAlert text={errorAlert} />}
+        {warningAlert && <WarningAlert text={warningAlert} />}
       </div>
 
       {/* iOS Install Instructions */}
@@ -78,5 +85,4 @@ const App = () => {
 };
 
 export default App;
-
 

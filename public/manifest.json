@@ -33,7 +33,7 @@
   ],
   "screenshots": [
     {
-      "src": "public/screenshot1.png",
+      "src": "screenshot1.png",
       "type": "image/png",
       "sizes": "1899x896",
       "form_factor": "wide",

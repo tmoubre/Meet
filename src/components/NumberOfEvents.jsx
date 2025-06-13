@@ -1,8 +1,8 @@
-//NumberOfEvents.jsx  
+// NumberOfEvents.jsx  
 
 import React, { useState, useEffect } from 'react';
 
-const NumberOfEvents = ({ currentNOE, setCurrentNOE }) => {
+const NumberOfEvents = ({ currentNOE, setCurrentNOE, setErrorAlert }) => {
   // keep an internal state so the input display updates immediately
   const [number, setNumber] = useState(currentNOE);
 
@@ -16,8 +16,14 @@ const NumberOfEvents = ({ currentNOE, setCurrentNOE }) => {
     const parsed = parseInt(val, 10);
     const final = isNaN(parsed) ? 0 : parsed;
 
-    setNumber(final);           // update local display
-    setCurrentNOE(final);       // notify parent
+    setNumber(final); // update local display
+
+    if (isNaN(parsed) || parsed <= 0) {
+      setErrorAlert('Please enter a valid number greater than zero.');
+    } else {
+      setErrorAlert('');
+      setCurrentNOE(final); // notify parent
+    }
   };
 
   return (
@@ -36,5 +42,3 @@ const NumberOfEvents = ({ currentNOE, setCurrentNOE }) => {
 };
 
 export default NumberOfEvents;
-
-

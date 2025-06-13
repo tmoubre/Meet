@@ -17,36 +17,49 @@ const App = () => {
   const [infoAlert, setInfoAlert] = useState('');
   const [errorAlert, setErrorAlert] = useState('');
 
-  // 🔻 PWA install prompt logic
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
+  const [installDismissed, setInstallDismissed] = useState(
+    localStorage.getItem('installPromptDismissed') === 'true'
+  );
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
-      setShowInstallPrompt(true); // Show modal prompt
+      if (!installDismissed) {
+        setShowInstallPrompt(true);
+      }
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     return () =>
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-  }, []);
+  }, [installDismissed]);
 
   const handleInstallClick = async () => {
     if (deferredPrompt) {
       deferredPrompt.prompt();
-      const choice = await deferredPrompt.userChoice;
-      if (choice.outcome === 'accepted') {
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
         console.log('User accepted the install prompt');
+        localStorage.setItem('installPromptDismissed', 'false');
+        setInstallDismissed(false);
       } else {
         console.log('User dismissed the install prompt');
+        localStorage.setItem('installPromptDismissed', 'true');
+        setInstallDismissed(true);
       }
-      setDeferredPrompt(null);
       setShowInstallPrompt(false);
+      setDeferredPrompt(null);
     }
   };
-  // 🔺 End PWA logic
+
+  const handleDismissInstall = () => {
+    localStorage.setItem('installPromptDismissed', 'true');
+    setInstallDismissed(true);
+    setShowInstallPrompt(false);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,13 +87,13 @@ const App = () => {
           <div className="modal-content">
             <p>Install this app for a better experience.</p>
             <button onClick={handleInstallClick}>Install App</button>
-            <button onClick={() => setShowInstallPrompt(false)}>Maybe later</button>
+            <button onClick={handleDismissInstall}>Maybe later</button>
           </div>
         </div>
       )}
 
-      {/* Reopen Install Prompt Button */}
-      {deferredPrompt && !showInstallPrompt && (
+      {/* Reopen Install Prompt */}
+      {!showInstallPrompt && installDismissed && deferredPrompt && (
         <div style={{ textAlign: 'center', marginTop: '10px' }}>
           <button onClick={() => setShowInstallPrompt(true)}>
             Reopen Install Prompt

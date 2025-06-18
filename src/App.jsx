@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import CitySearch from './components/CitySearch';
 import NumberOfEvents from './components/NumberOfEvents';
+import CityEventsChart from './components/CityEventsChart.jsx';
 import EventList from './components/EventList';
 import { extractLocations, getEvents } from './api';
 import mockData from './mock-data';
@@ -19,13 +20,8 @@ const App = () => {
   const [warningAlert, setWarningAlert] = useState('');
   const [showIosInstallBanner, setShowIosInstallBanner] = useState(false);
 
-  // iOS detection
-  const isIos = () => {
-    return /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
-  };
-
-  const isInStandaloneMode = () =>
-    'standalone' in window.navigator && window.navigator.standalone;
+  const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+  const isInStandaloneMode = () => 'standalone' in window.navigator && window.navigator.standalone;
 
   useEffect(() => {
     if (isIos() && !isInStandaloneMode()) {
@@ -40,6 +36,7 @@ const App = () => {
       } else {
         setWarningAlert('You are offline. Displayed events may not be up to date.');
       }
+
       const allEvents = await getEvents();
       const filtered =
         currentCity === 'See all cities'
@@ -48,18 +45,20 @@ const App = () => {
       setEvents(filtered.slice(0, currentNOE));
       setAllLocations(extractLocations(allEvents));
     };
+
     fetchData();
   }, [currentCity, currentNOE]);
 
   return (
     <div className="App">
+      <h1>Meet App</h1>
+
       <div className="alerts-container">
         {infoAlert && <InfoAlert text={infoAlert} />}
-        {errorAlert && <ErrorAlert text={errorAlert} />}
         {warningAlert && <WarningAlert text={warningAlert} />}
+        {errorAlert && <ErrorAlert text={errorAlert} />}
       </div>
 
-      {/* iOS Install Instructions */}
       {showIosInstallBanner && (
         <div className="ios-install-banner">
           <p>
@@ -79,10 +78,10 @@ const App = () => {
         setCurrentNOE={setCurrentNOE}
         setErrorAlert={setErrorAlert}
       />
+      <CityEventsChart allLocations={allLocations} events={events} />
       <EventList events={events} />
     </div>
   );
 };
 
 export default App;
-

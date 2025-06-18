@@ -16,42 +16,33 @@ const CityEventsChart = ({ allLocations, events }) => {
 
   useEffect(() => {
     const getData = () => {
-      // Generate unique city names and count matching events
-      const cityCounts = {};
-
-      events.forEach((event) => {
-        const fullLocation = event.location;
-        const city = fullLocation.split(/,| -/)[0]; // Fix regex
-
-        if (!cityCounts[city]) {
-          cityCounts[city] = 1;
-        } else {
-          cityCounts[city]++;
-        }
+      return allLocations.map((location) => {
+        const count = events.filter((event) => event.location === location).length;
+        const city = location.split(/,| -/)[0].trim();
+        return { city, count };
       });
-
-      return Object.entries(cityCounts).map(([city, count]) => ({
-        city,
-        count,
-      }));
     };
 
     setData(getData());
-  }, [events]);
+  }, [allLocations, events]);
 
   return (
     <ResponsiveContainer width="99%" height={400}>
-      <ScatterChart
-        margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
-      >
+      <ScatterChart margin={{ top: 20, right: 20, bottom: 60, left: 20 }}>
         <CartesianGrid />
-        <XAxis type="category" dataKey="city" name="City" />
+        <XAxis
+          type="category"
+          dataKey="city"
+          name="City"
+          angle={-45}
+          interval={0}
+          tick={{ fontSize: 12, dy: 10 }}
+        />
         <YAxis
           type="number"
           dataKey="count"
           name="Number of events"
-          allowDecimals={false}
-          tick={{ fontSize: 14 }}
+          tickFormatter={(value) => Math.round(value)}
         />
         <Tooltip cursor={{ strokeDasharray: "3 3" }} />
         <Scatter name="Event count" data={data} fill="#8884d8" />
@@ -61,4 +52,5 @@ const CityEventsChart = ({ allLocations, events }) => {
 };
 
 export default CityEventsChart;
+
 

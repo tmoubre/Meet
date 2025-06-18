@@ -45,7 +45,7 @@ const CityEventsChart = ({ allLocations, events }) => {
           tickFormatter={(value) => Math.round(value)}
         />
         <Tooltip cursor={{ strokeDasharray: "3 3" }} />
-        <Scatter name="Event count" data={data} fill="#8884d8" />
+        <Scatter data={data} fill="#8884d8" />
       </ScatterChart>
     </ResponsiveContainer>
   );

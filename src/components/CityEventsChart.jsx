@@ -20,7 +20,7 @@ const CityEventsChart = ({ allLocations, events }) => {
         const count = events.filter(
           (event) => event.location === location
         ).length;
-        const city = location.split(", ")[0];
+        const city = location.split("/,|-/ ")[0];
         return { city, count };
       });
     };
@@ -35,7 +35,7 @@ const CityEventsChart = ({ allLocations, events }) => {
       >
         <CartesianGrid />
         <XAxis type="category" dataKey="city" name="City" />
-        <YAxis type="number" dataKey="count" name="Number of events" />
+        <YAxis type="number" dataKey="count" name="Number of events"  angle={60} interval={0} tick={{ dx: 20, dy: 40, fontSize: 14 }}/>
         <Tooltip cursor={{ strokeDasharray: "3 3" }} />
         <Scatter name="Event count" data={data} fill="#8884d8" />
       </ScatterChart>

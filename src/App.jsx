@@ -12,6 +12,7 @@ import { InfoAlert, ErrorAlert, WarningAlert } from './components/Alert';
 
 const App = () => {
   const [events, setEvents] = useState([]);
+  const [allEvents, setAllEvents] = useState([]); // <-- Store full event list
   const [allLocations, setAllLocations] = useState([]);
   const [currentCity, setCurrentCity] = useState('See all cities');
   const [currentNOE, setCurrentNOE] = useState(mockData.length);
@@ -20,6 +21,7 @@ const App = () => {
   const [warningAlert, setWarningAlert] = useState('');
   const [showIosInstallBanner, setShowIosInstallBanner] = useState(false);
 
+  // iOS detection
   const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
   const isInStandaloneMode = () => 'standalone' in window.navigator && window.navigator.standalone;
 
@@ -37,13 +39,15 @@ const App = () => {
         setWarningAlert('You are offline. Displayed events may not be up to date.');
       }
 
-      const allEvents = await getEvents();
+      const eventsFromApi = await getEvents();
+      setAllEvents(eventsFromApi); // <-- Save full event list
+
       const filtered =
         currentCity === 'See all cities'
-          ? allEvents
-          : allEvents.filter((e) => e.location === currentCity);
+          ? eventsFromApi
+          : eventsFromApi.filter((e) => e.location === currentCity);
       setEvents(filtered.slice(0, currentNOE));
-      setAllLocations(extractLocations(allEvents));
+      setAllLocations(extractLocations(eventsFromApi));
     };
 
     fetchData();
@@ -78,10 +82,11 @@ const App = () => {
         setCurrentNOE={setCurrentNOE}
         setErrorAlert={setErrorAlert}
       />
-      <CityEventsChart allLocations={allLocations} events={events} />
+      <CityEventsChart allLocations={allLocations} events={allEvents} />
       <EventList events={events} />
     </div>
   );
 };
 
 export default App;
+

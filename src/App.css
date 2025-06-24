@@ -1,67 +1,39 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:500);
 
+/* Flex-center the entire app */
+body,
+html,
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* App container centered with max width */
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1400px;
   padding: 2rem;
   text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-.App {
-  text-align: center;
-  padding: 2% 5%;
 }
 
 .App * {
   box-sizing: border-box;
 }
 
-ul {
-  padding: 0;
-  list-style: none;
-}
-
-p {
-  margin: 5px 0;
+/* Inputs aligned side-by-side and responsive */
+.controls-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 input[type="text"],
@@ -72,9 +44,7 @@ input[type="number"] {
   border: 1px solid #ccc;
   font-size: 14px;
   line-height: 20px;
-  align-self: center;
   height: 38px;
-  margin-bottom: 20px;
 }
 
 .city {
@@ -115,14 +85,25 @@ input[type="number"] {
   background-color: #bcdcdb;
 }
 
+/* Event card styles */
 .event {
+  width: 100%;
+  max-width: 800px;
   padding: 10px 10px 35px;
-  margin-bottom: 10px;
+  margin: 1rem auto;
   text-align: left;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  background-color: white;
   position: relative;
+  transition: box-shadow 0.2s ease;
 }
+
+.event:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
 
 .details-btn {
   position: absolute;
@@ -134,6 +115,7 @@ input[type="number"] {
   cursor: pointer;
 }
 
+/* Alert styles */
 .alerts-container {
   position: fixed;
   top: 20px;
@@ -156,6 +138,7 @@ input[type="number"] {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* PWA install modal/button styles */
 .install-btn {
   margin: 1rem;
   padding: 0.5rem 1rem;
@@ -209,4 +192,70 @@ input[type="number"] {
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Charts layout */
+.charts-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 3rem;
+  margin: 2rem 0;
+  width: 100%;
+  justify-items: center;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .charts-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Typography and misc */
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+p {
+  margin: 5px 0;
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
 }

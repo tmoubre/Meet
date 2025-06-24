@@ -16,25 +16,34 @@ const CityEventsChart = ({ allLocations, events }) => {
 
   useEffect(() => {
     const getData = () => {
-      const locationMap = {};
+      const cityDataMap = new Map();
 
       allLocations.forEach((location) => {
+        const count = events.filter((event) => event.location === location).length;
         const city = location.split(/,| -/)[0].trim();
-        if (!locationMap[city]) {
-          locationMap[city] = 0;
+
+        // Accumulate event counts for cities with same display name
+        if (cityDataMap.has(city)) {
+          cityDataMap.set(city, cityDataMap.get(city) + count);
+        } else {
+          cityDataMap.set(city, count);
         }
-        locationMap[city] += events.filter((event) => event.location === location).length;
       });
 
-      return Object.entries(locationMap).map(([city, count]) => ({ city, count }));
+      const chartData = Array.from(cityDataMap, ([city, count]) => ({
+        city,
+        count,
+      }));
+
+      return chartData;
     };
 
     setData(getData());
   }, [allLocations, events]);
 
   return (
-    <ResponsiveContainer width="100%" minWidth={500} height={400}>
-      <ScatterChart margin={{ top: 20, right: 20, bottom: 60, left: -30 }}>
+    <ResponsiveContainer width="99%" height={400}>
+      <ScatterChart margin={{ top: 20, right: 20, bottom: 60, left: 20 }}>
         <CartesianGrid />
         <XAxis
           type="category"
@@ -49,15 +58,13 @@ const CityEventsChart = ({ allLocations, events }) => {
           dataKey="count"
           name="Number of events"
           allowDecimals={false}
-          domain={[0, 'dataMax + 1']}
-          tick={{ fontSize: 14 }}
         />
         <Tooltip
           cursor={{ strokeDasharray: "3 3" }}
-          formatter={(value, name) => [`${value}`, "Events"]}
+          formatter={(value, name) => [value, "Event count"]}
           labelFormatter={(label) => `City: ${label}`}
         />
-        <Scatter name="Event count" data={data} fill="#8884d8" />
+        <Scatter data={data} fill="#8884d8" />
       </ScatterChart>
     </ResponsiveContainer>
   );

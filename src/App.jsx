@@ -1,9 +1,10 @@
-// App.jsx
+//App.jsx
 
 import React, { useState, useEffect } from 'react';
 import CitySearch from './components/CitySearch';
 import NumberOfEvents from './components/NumberOfEvents';
 import CityEventsChart from './components/CityEventsChart';
+import EventGenresChart from './components/EventGenresChart';
 import EventList from './components/EventList';
 import { extractLocations, getEvents } from './api';
 import mockData from './mock-data';
@@ -12,7 +13,7 @@ import { InfoAlert, ErrorAlert, WarningAlert } from './components/Alert';
 
 const App = () => {
   const [events, setEvents] = useState([]);
-  const [allEvents, setAllEvents] = useState([]); // ✅ all raw events
+  const [allEvents, setAllEvents] = useState([]);
   const [allLocations, setAllLocations] = useState([]);
   const [currentCity, setCurrentCity] = useState('See all cities');
   const [currentNOE, setCurrentNOE] = useState(mockData.length);
@@ -21,7 +22,6 @@ const App = () => {
   const [warningAlert, setWarningAlert] = useState('');
   const [showIosInstallBanner, setShowIosInstallBanner] = useState(false);
 
-  // iOS detection
   const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
   const isInStandaloneMode = () => 'standalone' in window.navigator && window.navigator.standalone;
 
@@ -40,7 +40,7 @@ const App = () => {
       }
 
       const eventsData = await getEvents();
-      setAllEvents(eventsData); // ✅ store full data for chart
+      setAllEvents(eventsData);
 
       const filtered =
         currentCity === 'See all cities'
@@ -84,10 +84,16 @@ const App = () => {
         setCurrentNOE={setCurrentNOE}
         setErrorAlert={setErrorAlert}
       />
-      <CityEventsChart allLocations={allLocations} events={allEvents} /> {/* ✅ pass full data */}
+
+      <div className="charts-container">
+        <CityEventsChart allLocations={allLocations} events={allEvents} />
+        <EventGenresChart events={allEvents} />
+      </div>
+
       <EventList events={events} />
     </div>
   );
 };
 
 export default App;
+

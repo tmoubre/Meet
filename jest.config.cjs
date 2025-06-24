@@ -4,11 +4,12 @@ module.exports = {
     "^.+\\.jsx?$": "babel-jest",
   },
   transformIgnorePatterns: [
-    "/node_modules/(?!(uuid|@cucumber|jest-cucumber)/)", // allow specific ES modules to be transformed
+    "/node_modules/(?!(uuid|@cucumber|jest-cucumber)/)",
   ],
   moduleNameMapper: {
     "\\.(css|less|scss|sass)$": "identity-obj-proxy",
   },
   moduleFileExtensions: ["js", "jsx"],
+  setupFiles: ["<rootDir>/jest.setup.js"],
   setupFilesAfterEnv: ["<rootDir>/setupTests.js"],
 };

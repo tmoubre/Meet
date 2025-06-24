@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52.94% </span>
+                <span class="strong">84.21% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>9/17</span>
+                <span class='fraction'>16/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">37.5% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/8</span>
+                <span class='fraction'>6/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">82.35% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>9/15</span>
+                <span class='fraction'>14/17</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -129,7 +129,14 @@
 <a name='L64'></a><a href='#L64'>64</a>
 <a name='L65'></a><a href='#L65'>65</a>
 <a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -143,29 +150,36 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">83x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">83x</span>
+<span class="cline-any cline-yes">38x</span>
+<span class="cline-any cline-yes">38x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">38x</span>
+<span class="cline-any cline-yes">1540x</span>
+<span class="cline-any cline-yes">44x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">44x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">44x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">44x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">38x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">38x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">83x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -213,25 +227,34 @@ const CityEventsChart = ({ allLocations, events }) =&gt; {
 &nbsp;
   useEffect(() =&gt; {
     const getData = () =&gt; {
-      const locationMap = {};
+      const cityDataMap = new Map();
 &nbsp;
-      allLocations.forEach(<span class="fstat-no" title="function not covered" >(l</span>ocation) =&gt; {
-        const city = <span class="cstat-no" title="statement not covered" >location.split(/,| -/)[0].trim();</span>
-<span class="cstat-no" title="statement not covered" >        if (!locationMap[city]) {</span>
-<span class="cstat-no" title="statement not covered" >          locationMap[city] = 0;</span>
+      allLocations.forEach((location) =&gt; {
+        const count = events.filter((event) =&gt; event.location === location).length;
+        const city = location.split(/,| -/)[0].trim();
+&nbsp;
+        // Accumulate event counts for cities with same display name
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (cityDataMap.has(city)) {
+<span class="cstat-no" title="statement not covered" >          cityDataMap.set(city, cityDataMap.get(city) + count);</span>
+        } else {
+          cityDataMap.set(city, count);
         }
-<span class="cstat-no" title="statement not covered" >        locationMap[city] += events.filter(<span class="fstat-no" title="function not covered" >(e</span>vent) =&gt; <span class="cstat-no" title="statement not covered" >event.location === location)</span>.length;</span>
       });
 &nbsp;
-      return Object.entries(locationMap).map(<span class="fstat-no" title="function not covered" >([</span>city, count]) =&gt; (<span class="cstat-no" title="statement not covered" >{ city, count })</span>);
+      const chartData = Array.from(cityDataMap, ([city, count]) =&gt; ({
+        city,
+        count,
+      }));
+&nbsp;
+      return chartData;
     };
 &nbsp;
     setData(getData());
   }, [allLocations, events]);
 &nbsp;
   return (
-    &lt;ResponsiveContainer width="100%" minWidth={500} height={400}&gt;
-      &lt;ScatterChart margin={{ top: 20, right: 20, bottom: 60, left: -30 }}&gt;
+    &lt;ResponsiveContainer width="99%" height={400}&gt;
+      &lt;ScatterChart margin={{ top: 20, right: 20, bottom: 60, left: 20 }}&gt;
         &lt;CartesianGrid /&gt;
         &lt;XAxis
           type="category"
@@ -246,15 +269,13 @@ const CityEventsChart = ({ allLocations, events }) =&gt; {
           dataKey="count"
           name="Number of events"
           allowDecimals={false}
-          domain={[0, 'dataMax + 1']}
-          tick={{ fontSize: 14 }}
         /&gt;
         &lt;Tooltip
           cursor={{ strokeDasharray: "3 3" }}
-          formatter={<span class="fstat-no" title="function not covered" >(v</span>alue, name) =&gt; <span class="cstat-no" title="statement not covered" >[`${value}`, "Events"]}</span>
+          formatter={<span class="fstat-no" title="function not covered" >(v</span>alue, name) =&gt; <span class="cstat-no" title="statement not covered" >[value, "Event count"]}</span>
           labelFormatter={<span class="fstat-no" title="function not covered" >(l</span>abel) =&gt; <span class="cstat-no" title="statement not covered" >`City: ${label}`}</span>
         /&gt;
-        &lt;Scatter name="Event count" data={data} fill="#8884d8" /&gt;
+        &lt;Scatter data={data} fill="#8884d8" /&gt;
       &lt;/ScatterChart&gt;
     &lt;/ResponsiveContainer&gt;
   );
@@ -268,7 +289,7 @@ export default CityEventsChart;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-06-20T10:48:31.978Z
+                at 2025-06-24T11:45:54.893Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
